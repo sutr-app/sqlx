@@ -16,6 +16,7 @@ use sqlx_core::connection::{ConnectOptions, Connection};
 use sqlx_core::database::Database;
 use sqlx_core::describe::Describe;
 use sqlx_core::executor::Executor;
+use sqlx_core::query_result::HasRowsAffected;
 use sqlx_core::transaction::TransactionManager;
 
 sqlx_core::declare_driver_with_optional_migrate!(DRIVER = Sqlite);

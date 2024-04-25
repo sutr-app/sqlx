@@ -73,6 +73,7 @@ pub mod logger;
 pub mod net;
 pub mod query_as;
 pub mod query_builder;
+pub mod query_result;
 pub mod query_scalar;
 
 pub mod raw_sql;

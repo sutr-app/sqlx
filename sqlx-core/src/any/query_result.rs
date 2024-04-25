@@ -1,4 +1,5 @@
 use std::iter::{Extend, IntoIterator};
+use crate::query_result::{HasLastInsertId, HasRowsAffected};
 
 #[derive(Debug, Default)]
 pub struct AnyQueryResult {
@@ -8,13 +9,15 @@ pub struct AnyQueryResult {
     pub last_insert_id: Option<i64>,
 }
 
-impl AnyQueryResult {
-    pub fn rows_affected(&self) -> u64 {
-        self.rows_affected
-    }
-
-    pub fn last_insert_id(&self) -> Option<i64> {
+impl HasLastInsertId<Option<i64>> for AnyQueryResult {
+    fn last_insert_id(&self) -> Option<i64> {
         self.last_insert_id
+    }
+}
+
+impl HasRowsAffected for AnyQueryResult {
+    fn rows_affected(&self) -> u64 {
+        self.rows_affected
     }
 }
 

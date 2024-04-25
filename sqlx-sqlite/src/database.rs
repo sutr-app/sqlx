@@ -17,6 +17,8 @@ impl Database for Sqlite {
 
     type Row = SqliteRow;
 
+    type LastInsertIdType = i64;
+
     type QueryResult = SqliteQueryResult;
 
     type Column = SqliteColumn;

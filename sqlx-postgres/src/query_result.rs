@@ -1,12 +1,19 @@
 use std::iter::{Extend, IntoIterator};
+use sqlx_core::query_result::{HasLastInsertId, HasRowsAffected};
 
 #[derive(Debug, Default)]
 pub struct PgQueryResult {
     pub(super) rows_affected: u64,
 }
 
-impl PgQueryResult {
-    pub fn rows_affected(&self) -> u64 {
+impl HasLastInsertId<Option<()>> for PgQueryResult {
+    fn last_insert_id(&self) -> Option<()> {
+        None
+    }
+}
+
+impl HasRowsAffected for PgQueryResult {
+    fn rows_affected(&self) -> u64 {
         self.rows_affected
     }
 }

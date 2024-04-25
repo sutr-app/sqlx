@@ -1,4 +1,5 @@
 use std::iter::{Extend, IntoIterator};
+use sqlx_core::query_result::{HasLastInsertId, HasRowsAffected};
 
 #[derive(Debug, Default)]
 pub struct MySqlQueryResult {
@@ -6,13 +7,15 @@ pub struct MySqlQueryResult {
     pub(super) last_insert_id: u64,
 }
 
-impl MySqlQueryResult {
-    pub fn last_insert_id(&self) -> u64 {
-        self.last_insert_id
-    }
-
-    pub fn rows_affected(&self) -> u64 {
+impl HasRowsAffected for MySqlQueryResult {
+    fn rows_affected(&self) -> u64 {
         self.rows_affected
+    }
+}
+
+impl HasLastInsertId<u64> for MySqlQueryResult {
+    fn last_insert_id(&self) -> u64 {
+        self.last_insert_id
     }
 }
 
