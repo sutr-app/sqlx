@@ -1,4 +1,5 @@
 use std::iter::{Extend, IntoIterator};
+use sqlx_core::query_result::{HasLastInsertId, HasRowsAffected};
 
 #[derive(Debug, Default)]
 pub struct SqliteQueryResult {
@@ -6,13 +7,15 @@ pub struct SqliteQueryResult {
     pub(super) last_insert_rowid: i64,
 }
 
-impl SqliteQueryResult {
-    pub fn rows_affected(&self) -> u64 {
-        self.changes
-    }
-
-    pub fn last_insert_rowid(&self) -> i64 {
+impl HasLastInsertId<i64> for SqliteQueryResult {
+    fn last_insert_id(&self) -> i64 {
         self.last_insert_rowid
+    }
+}
+
+impl HasRowsAffected for SqliteQueryResult {
+    fn rows_affected(&self) -> u64 {
+        self.changes
     }
 }
 

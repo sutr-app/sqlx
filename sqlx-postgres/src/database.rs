@@ -18,6 +18,7 @@ impl Database for Postgres {
 
     type Row = PgRow;
 
+    type LastInsertIdType = Option<()>;
     type QueryResult = PgQueryResult;
 
     type Column = PgColumn;

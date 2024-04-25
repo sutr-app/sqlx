@@ -16,6 +16,7 @@ impl Database for MySql {
 
     type Row = MySqlRow;
 
+    type LastInsertIdType = u64;
     type QueryResult = MySqlQueryResult;
 
     type Column = MySqlColumn;

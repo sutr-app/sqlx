@@ -16,6 +16,8 @@ impl Database for Any {
 
     type Row = AnyRow;
 
+    type LastInsertIdType = Option<i64>;
+
     type QueryResult = AnyQueryResult;
 
     type Column = AnyColumn;

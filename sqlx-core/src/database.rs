@@ -58,6 +58,7 @@ use std::fmt::Debug;
 use crate::arguments::Arguments;
 use crate::column::Column;
 use crate::connection::Connection;
+use crate::query_result::{HasLastInsertId, HasRowsAffected};
 use crate::row::Row;
 
 use crate::statement::Statement;
@@ -79,8 +80,10 @@ pub trait Database: 'static + Sized + Send + Debug {
     /// The concrete `Row` implementation for this database.
     type Row: Row<Database = Self>;
 
+    type LastInsertIdType;
+
     /// The concrete `QueryResult` implementation for this database.
-    type QueryResult: 'static + Sized + Send + Sync + Default + Extend<Self::QueryResult>;
+    type QueryResult: 'static + Sized + Send + Sync + Default + Extend<Self::QueryResult> + HasLastInsertId<Self::LastInsertIdType> + HasRowsAffected;
 
     /// The concrete `Column` implementation for this database.
     type Column: Column<Database = Self>;
