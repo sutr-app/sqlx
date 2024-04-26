@@ -138,6 +138,8 @@ pub mod query {
     pub use sqlx_core::query::{Map, Query};
     pub use sqlx_core::query_as::QueryAs;
     pub use sqlx_core::query_scalar::QueryScalar;
+    pub use sqlx_core::query_result::HasLastInsertId;
+    pub use sqlx_core::query_result::HasRowsAffected;
 }
 
 /// Convenience re-export of common traits.
