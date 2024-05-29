@@ -154,6 +154,7 @@ impl<'a> TryFrom<&'a MySqlTypeInfo> for AnyTypeInfo {
         Ok(AnyTypeInfo {
             kind: match &type_info.r#type {
                 ColumnType::Null => AnyTypeInfoKind::Null,
+                ColumnType::Tiny if type_info.max_size.is_some_and(|v| v == 1) => AnyTypeInfoKind::Bool,
                 ColumnType::Short => AnyTypeInfoKind::SmallInt,
                 ColumnType::Long => AnyTypeInfoKind::Integer,
                 ColumnType::LongLong => AnyTypeInfoKind::BigInt,
