@@ -57,7 +57,7 @@ impl TypeInfo for SqliteTypeInfo {
         match self.0 {
             DataType::Null => "NULL",
             DataType::Text => "TEXT",
-            DataType::Float => "REAL",
+            DataType::Float => "DOUBLE",
             DataType::Blob => "BLOB",
             DataType::Int4 | DataType::Integer => "INTEGER",
             DataType::Numeric => "NUMERIC",
@@ -147,6 +147,7 @@ fn test_data_type_from_str() -> Result<(), BoxDynError> {
     assert_eq!(DataType::Blob, "BLOB".parse()?);
 
     assert_eq!(DataType::Float, "REAL".parse()?);
+    assert_eq!(DataType::Float, "DOUBLE".parse()?);
     assert_eq!(DataType::Float, "FLOAT".parse()?);
     assert_eq!(DataType::Float, "DOUBLE PRECISION".parse()?);
 
