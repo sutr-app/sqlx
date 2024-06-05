@@ -16,7 +16,7 @@ use sqlx_core::connection::{ConnectOptions, Connection};
 use sqlx_core::database::Database;
 use sqlx_core::describe::Describe;
 use sqlx_core::executor::Executor;
-use sqlx_core::query_result::HasRowsAffected;
+use sqlx_core::query_result::{HasLastInsertId, HasRowsAffected};
 use sqlx_core::transaction::TransactionManager;
 
 sqlx_core::declare_driver_with_optional_migrate!(DRIVER = Sqlite);
@@ -221,6 +221,6 @@ fn map_arguments(args: AnyArguments<'_>) -> SqliteArguments<'_> {
 fn map_result(res: SqliteQueryResult) -> AnyQueryResult {
     AnyQueryResult {
         rows_affected: res.rows_affected(),
-        last_insert_id: None,
+        last_insert_id: if res.last_insert_id() > 0 {Some(res.last_insert_id())} else {None},
     }
 }
