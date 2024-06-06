@@ -1,4 +1,4 @@
-use crate::any::error::mismatched_types;
+// use crate::any::error::mismatched_types;
 use crate::any::{Any, AnyColumn, AnyTypeInfo, AnyTypeInfoKind, AnyValue, AnyValueKind};
 use crate::column::{Column, ColumnIndex};
 use crate::database::Database;
@@ -6,7 +6,7 @@ use crate::decode::Decode;
 use crate::error::Error;
 use crate::ext::ustr::UStr;
 use crate::row::Row;
-use crate::type_info::TypeInfo;
+// use crate::type_info::TypeInfo;
 use crate::types::Type;
 use crate::value::{Value, ValueRef};
 use std::sync::Arc;
@@ -49,8 +49,8 @@ impl Row for AnyRow {
         T: Decode<'r, Self::Database> + Type<Self::Database>,
     {
         let value = self.try_get_raw(&index)?;
-        let ty = value.type_info();
-
+        //let ty = value.type_info();
+        //
         // cannot cast float to f64. try decode opmistically and handle error
         // if !value.is_null() && !ty.is_null() && !T::compatible(&ty) {
         //     Err(mismatched_types::<T>(&ty))
