@@ -27,7 +27,7 @@ pub(crate) enum DataType {
 
     // non-standard extensions (chosen based on the column's declared type)
     /// Chosen if the column's declared type is `BOOLEAN`.
-    Bool,
+    // Bool,
     /// Chosen if the column's declared type is `INT4`;
     /// instructs the macros to use `i32` instead of `i64`.
     /// Legacy feature; no idea if this is actually used anywhere.
@@ -63,7 +63,7 @@ impl TypeInfo for SqliteTypeInfo {
             DataType::Numeric => "NUMERIC",
 
             // non-standard extensions
-            DataType::Bool => "BOOLEAN",
+            // DataType::Bool => "BOOLEAN",
             DataType::Date => "DATE",
             DataType::Time => "TIME",
             DataType::Datetime => "DATETIME",
@@ -97,7 +97,7 @@ impl FromStr for DataType {
         Ok(match &*s {
             "int4" => DataType::Int4,
             "int8" => DataType::Integer,
-            "boolean" | "bool" => DataType::Bool,
+            "boolean" | "bool" =>  DataType::Integer,//DataType::Bool,
 
             "date" => DataType::Date,
             "time" => DataType::Time,
@@ -151,8 +151,8 @@ fn test_data_type_from_str() -> Result<(), BoxDynError> {
     assert_eq!(DataType::Float, "FLOAT".parse()?);
     assert_eq!(DataType::Float, "DOUBLE PRECISION".parse()?);
 
-    assert_eq!(DataType::Bool, "BOOLEAN".parse()?);
-    assert_eq!(DataType::Bool, "BOOL".parse()?);
+    // assert_eq!(DataType::Bool, "BOOLEAN".parse()?);
+    // assert_eq!(DataType::Bool, "BOOL".parse()?);
 
     assert_eq!(DataType::Datetime, "DATETIME".parse()?);
     assert_eq!(DataType::Time, "TIME".parse()?);

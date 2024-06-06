@@ -352,7 +352,7 @@ fn opcode_to_type(op: &str) -> DataType {
     match op {
         OP_REAL => DataType::Float,
         OP_BLOB => DataType::Blob,
-        OP_AND | OP_OR => DataType::Bool,
+        OP_AND | OP_OR => DataType::Integer,
         OP_NEWROWID | OP_ROWID | OP_COUNT | OP_INT64 | OP_INTEGER => DataType::Integer,
         OP_STRING8 => DataType::Text,
         OP_COLUMN | _ => DataType::Null,
@@ -1251,7 +1251,7 @@ pub(super) fn explain(
                         if let Some(r_p2) = state.mem.r.get(&p2) {
                             let datatype = match r_p2.map_to_datatype() {
                                 // The result of a `SUM()` can be arbitrarily large
-                                DataType::Integer | DataType::Int4 | DataType::Bool => {
+                                DataType::Integer | DataType::Int4 => {
                                     DataType::Integer
                                 }
                                 _ => DataType::Float,

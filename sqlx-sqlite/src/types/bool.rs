@@ -7,11 +7,11 @@ use crate::{Sqlite, SqliteArgumentValue, SqliteTypeInfo, SqliteValueRef};
 
 impl Type<Sqlite> for bool {
     fn type_info() -> SqliteTypeInfo {
-        SqliteTypeInfo(DataType::Bool)
+        SqliteTypeInfo(DataType::Integer)
     }
 
     fn compatible(ty: &SqliteTypeInfo) -> bool {
-        matches!(ty.0, DataType::Bool | DataType::Int4 | DataType::Integer)
+        matches!(ty.0, DataType::Int4 | DataType::Integer)
     }
 }
 

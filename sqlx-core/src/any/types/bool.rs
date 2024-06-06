@@ -27,6 +27,9 @@ impl<'r> Decode<'r, Any> for bool {
     fn decode(value: <Any as Database>::ValueRef<'r>) -> Result<Self, BoxDynError> {
         match value.kind {
             AnyValueKind::Bool(b) => Ok(b),
+            AnyValueKind::SmallInt(b) => Ok(b != 0),
+            AnyValueKind::Integer(b) => Ok(b != 0),
+            AnyValueKind::BigInt(b) => Ok(b != 0),
             other => other.unexpected(),
         }
     }
