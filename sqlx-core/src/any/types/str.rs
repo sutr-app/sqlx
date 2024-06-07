@@ -66,6 +66,13 @@ impl<'r> Decode<'r, Any> for String {
     fn decode(value: <Any as Database>::ValueRef<'r>) -> Result<Self, BoxDynError> {
         match value.kind {
             AnyValueKind::Text(text) => Ok(text.into_owned()),
+            AnyValueKind::Blob(Cow::Borrowed(blob)) => Ok(String::from_utf8_lossy(blob).into_owned()),
+            // This shouldn't happen in practice, it means the user got an `AnyValueRef`
+            // constructed from an owned `Vec<u8>` which shouldn't be allowed by the API.
+            AnyValueKind::Blob(Cow::Owned(_text)) => {
+                panic!("attempting to return a borrow that outlives its buffer")
+            }
+
             other => other.unexpected(),
         }
     }
